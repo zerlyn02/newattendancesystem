@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melaka High School Register</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+    <h3>Register</h3>
+    <div class="form-container">
+        <form action="Login.html" method="POST">
+            <div class="form-group">
+                <label>Name</label>
+                <input type="text" class="form-control" placeholder="Enter name" required>
+            </div>
+
+            <div class="form-group">
+                <label>Email</label>
+                <input type="email" class="form-control" placeholder="Enter email" required>
+            </div>
+
+            <div class="form-group">
+                <label>Password</label>
+                <input type="password" class="form-control" placeholder="Enter password" required>
+            </div>
+
+            <div class="form-group">
+                <label>Re-enter Password</label>
+                <input type="password" class="form-control" placeholder="Re-enter password" required>
+            </div>
+
+            <div class="form-group">
+                <label>Date of Birth</label>
+                <input type="date" class="form-control" required>
+            </div>
+
+            <div class="form-group">
+                <label>Address</label>
+                <textarea class="form-control" rows="3" placeholder="Address on IC" required></textarea>
+            </div>
+
+            <div class="form-check">
+                <label>I am a...</label><br>
+                <input class="form-check-input" type="radio" name="role" checked>
+                <label class="form-check-label">Teacher</label>
+            </div>
+            
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="role">
+                <label class="form-check-label">Guardian</label>
+            </div>
+
+            <div class="form-group">
+                <label>Upload Student enrolment letter or teacher's card</label>
+                <input type="file" class="form-control">
+            </div>
+
+            <div style="margin-top: 20px;">
+                <div class="form-group">
+                    <label>Subject Taught (if Teacher):</label>
+                    <select class="form-control">
+                        <option value="">-- Select Subject --</option>
+                        <option value="math">Mathematics</option>
+                        <option value="science">Science</option>
+                        <option value="history">History</option>
+                        <option value="english">English</option>
+                    </select>
+                </div>
+            </div>
+
+            <div style="margin-top: 20px;">
+                <div class="form-group">
+                    <label style="margin-bottom: 0;">Children are studying in which class (if Guardian):</label>
+                    <div class="checkbox">
+                        <label><input type="checkbox" value="A1"> A1</label><br>
+                        <label><input type="checkbox" value="B1"> B1</label><br>
+                        <label><input type="checkbox" value="C1"> C1</label><br>
+                        <label><input type="checkbox" value="D1"> D1</label><br>
+                    </div>
+                </div>
+            </div>
+
+            <div class="button-container">
+                <button type="submit" class="btn btn-primary">Register</button>
+            </div>
+            
+            
+        </form>
+    </div>
+    <br>
+</body>
+</html>
