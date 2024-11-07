@@ -17,7 +17,7 @@ table,th,td {
     border: 1px solid black;
     border-collapse: collapse;
     padding: 10px;
-    background-color:white;
+    background-color: white ;
 }
 
 table td:nth-child(2) {
