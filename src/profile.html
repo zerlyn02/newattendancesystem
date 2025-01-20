@@ -1,0 +1,165 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>User Profile</title>
+    <link rel="stylesheet" href="css/profile.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+</head>
+<body>
+    <div class="topnav">
+        <a href="Main.html">Home</a>
+        <p>Profile</p> 
+    </div>
+    <br>
+    <div class="container">
+        <h1 class="text-center">User Profile</h1>
+        <div class="form-container">
+            <!-- Profile Picture -->
+            <img id="profile-picture" src="images/default-profile.png" alt="Profile Picture" />
+            <input type="file" id="profile-upload" accept="image/*" />
+            <button id="capture-btn" type="button">Capture Photo</button>
+
+            <!-- Profile Form -->
+            <form id="profile-form">
+                <label for="name">Name:</label>
+                <input type="text" id="name" name="name" class="form-control" required>
+
+                <label for="email">Email:</label>
+                <input type="email" id="email" name="email" class="form-control" required>
+
+                <label for="dob">Date of Birth:</label>
+                <input type="date" id="dob" name="dob" class="form-control" required>
+
+                <label for="address">Address:</label>
+                <textarea id="address" name="address" class="form-control" required></textarea>
+
+                <button type="submit" class="btn btn-primary">Save Profile</button>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            // Load profile data from the database
+            fetchUserProfile();
+
+            // Load profile picture from local storage or use default
+            const savedPicture = localStorage.getItem('profilePicture');
+            if (savedPicture) {
+                document.getElementById('profile-picture').src = savedPicture;
+            }
+
+            // Handle profile picture upload
+            document.getElementById('profile-upload').addEventListener('change', handleProfilePictureUpload);
+
+            // Handle capture button for camera
+            document.getElementById('capture-btn').addEventListener('click', captureProfilePicture);
+
+            // Handle profile form submission
+            document.getElementById('profile-form').addEventListener('submit', updateUserProfile);
+        });
+
+        // Fetch user profile from the server
+        function fetchUserProfile() {
+            fetch('php/get_profile.php')
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        document.getElementById('name').value = data.name;
+                        document.getElementById('email').value = data.email;
+                        document.getElementById('dob').value = data.dob;
+                        document.getElementById('address').value = data.address;
+                    } else {
+                        console.error('Error fetching profile:', data.message);
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                });
+        }
+
+        // Update user profile
+        function updateUserProfile(event) {
+            event.preventDefault();
+
+            const name = document.getElementById('name').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const dob = document.getElementById('dob').value.trim();
+            const address = document.getElementById('address').value.trim();
+
+            if (!name || !email || !dob || !address) {
+                alert('All fields are required.');
+                return;
+            }
+
+            fetch('php/update_profile.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
+                body: `name=${encodeURIComponent(name)}&email=${encodeURIComponent(email)}&dob=${encodeURIComponent(dob)}&address=${encodeURIComponent(address)}`
+            })
+                .then(response => response.json())
+                .then(data => {
+                    if (data.success) {
+                        alert('Profile updated successfully!');
+                    } else {
+                        alert(data.message || 'Error updating profile.');
+                    }
+                })
+                .catch(error => {
+                    console.error('Error:', error);
+                    alert('An error occurred while updating the profile.');
+                });
+        }
+
+        // Handle profile picture upload
+        function handleProfilePictureUpload(event) {
+            const file = event.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onloadend = function () {
+                    const imageURL = reader.result;
+                    localStorage.setItem('profilePicture', imageURL);
+                    document.getElementById('profile-picture').src = imageURL;
+                };
+                reader.readAsDataURL(file);
+            }
+        }
+
+        // Capture profile picture using the camera
+        function captureProfilePicture() {
+            const video = document.createElement('video');
+            const canvas = document.createElement('canvas');
+            const constraints = { video: { facingMode: 'user' } };
+
+            navigator.mediaDevices.getUserMedia(constraints)
+                .then(function (stream) {
+                    video.srcObject = stream;
+                    video.play();
+                    document.body.appendChild(video); // Show video stream
+
+                    video.addEventListener('play', function () {
+                        setTimeout(function () {
+                            canvas.width = video.videoWidth;
+                            canvas.height = video.videoHeight;
+                            canvas.getContext('2d').drawImage(video, 0, 0);
+                            const imageURL = canvas.toDataURL('image/jpeg');
+                            localStorage.setItem('profilePicture', imageURL);
+                            document.getElementById('profile-picture').src = imageURL;
+
+                            stream.getTracks().forEach(track => track.stop()); // Stop the camera
+                            video.remove(); // Remove the video element
+                        }, 1000); // Take snapshot after 1 second
+                    });
+                })
+                .catch(function (error) {
+                    console.error('Error accessing camera:', error);
+                    alert('Unable to access the camera.');
+                });
+        }
+    </script>
+</body>
+</html>
