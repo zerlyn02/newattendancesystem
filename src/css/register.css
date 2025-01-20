@@ -1,0 +1,93 @@
+body {
+    font-family: Arial, sans-serif;
+    background: linear-gradient(135deg, #b2d8b8, #f0f8f0);
+    height: 100vh;
+    color: #333;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    margin: auto;
+}
+
+h3 {
+    font-size: 1.8rem;
+    color: #2c3e50;
+    margin-bottom: 20px;
+}
+
+.form-container {
+    background-color: #fff;
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 30px;
+    width: 100%;
+}
+
+.form-group {
+    margin-bottom: 20px;
+}
+
+.form-group label {
+    font-weight: bold;
+    margin-bottom: 5px;
+    display: block;
+}
+
+.form-control {
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px 10px;
+    width: 100%;
+}
+
+.checkbox label {
+    font-weight: normal;
+}
+
+.button-container {
+    margin-top: 20px;
+}
+
+.btn {
+    background-color: #435c47;
+    border-color: #435c47;
+    color: #fff;
+}
+
+.btn:hover {
+    background-color: #3b513e;
+    border-color: #3b513e;
+}
+
+/* Set a consistent width for the form fields */
+/* Ensure the form fields have a consistent width */
+.form-control {
+    width: 270.5px !important; /* Standardize the width */
+    box-sizing: border-box; /* Include padding and border in width calculation */
+}
+
+/* Hide the fields without affecting the layout */
+#teacherFields, #guardianFields {
+    visibility: hidden; /* Make them invisible */
+    position: absolute; /* Take them out of the layout flow */
+    height: 0; /* Collapse their height */
+    width: 270.5px; /* Keep the same width as visible fields */
+    padding: 0; /* Remove any padding when hidden */
+    margin: 0; /* Remove any margin when hidden */
+}
+
+/* When fields are visible, restore them to normal layout */
+#teacherFields.active, #guardianFields.active {
+    visibility: visible; /* Make them visible */
+    position: relative; /* Return them to normal layout flow */
+    height: auto; /* Allow their content to show */
+    padding: 10px; /* Apply normal padding */
+    margin: 10px 0; /* Apply normal margin */
+}

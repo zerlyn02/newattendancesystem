@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Melaka High School Register</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="css/register.css">
+</head>
+<body>
+    <div class="container">
+        <h3 class="text-center">Register</h3>
+        <div class="form-container">
+            <!-- Form begins here -->
+            <form action="php/register.php" method="POST" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="name">Name</label>
+                    <input type="text" id="name" name="name" class="form-control" placeholder="Enter name" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="email">Email</label>
+                    <input type="email" id="email" name="email" class="form-control" placeholder="Enter email" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Password</label>
+                    <input type="password" id="password" name="password" class="form-control" placeholder="Enter password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="confirm_password">Re-enter Password</label>
+                    <input type="password" id="confirm_password" name="confirm_password" class="form-control" placeholder="Re-enter password" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="dob">Date of Birth</label>
+                    <input type="date" id="dob" name="dob" class="form-control" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="address">Address</label>
+                    <textarea id="address" name="address" class="form-control" rows="3" placeholder="Address on IC" required></textarea>
+                </div>
+
+                <div class="form-check">
+                    <label>I am a...</label><br>
+                    <label>
+                        <input type="radio" name="role" value="Teacher"> Teacher
+                    </label><br>
+                    <label>
+                        <input type="radio" name="role" value="Guardian"> Guardian
+                    </label>
+                </div>
+
+                <!-- Teacher-specific fields -->
+                <div id="teacherFields" class="role-fields">
+                    <div class="form-group">
+                        <label for="teacher_card">Upload Teacher's Card</label>
+                        <input type="file" id="teacher_card" name="teacher_card" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label for="subject_taught">Subject Taught</label>
+                        <select id="subject_taught" name="subject_taught" class="form-control">
+                            <option value="">-- Select Subject --</option>
+                            <option value="Math">Mathematics</option>
+                            <option value="Science">Science</option>
+                            <option value="History">History</option>
+                            <option value="English">English</option>
+                        </select>
+                    </div>
+                </div>
+
+                <!-- Guardian-specific fields -->
+                <div id="guardianFields" class="role-fields">
+                    <div class="form-group">
+                        <label for="enrolment_letter">Upload Student Enrolment Letter</label>
+                        <input type="file" id="enrolment_letter" name="enrolment_letter" class="form-control">
+                    </div>
+                    <div class="form-group">
+                        <label>Children are Studying in Which Class</label>
+                        <div class="checkbox">
+                            <label><input type="checkbox" name="classes[]" value="A1"> A1</label><br>
+                            <label><input type="checkbox" name="classes[]" value="B1"> B1</label><br>
+                            <label><input type="checkbox" name="classes[]" value="C1"> C1</label><br>
+                            <label><input type="checkbox" name="classes[]" value="D1"> D1</label>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="button-container text-center">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+$(document).ready(function () {
+    // Hide the fields initially
+    $('#teacherFields, #guardianFields').removeClass('active').css({
+        visibility: 'hidden',
+        height: '0',
+        padding: '0',
+        margin: '0'
+    });
+
+    // Show/hide fields based on role selection
+    $('input[name="role"]').change(function () {
+        if ($(this).val() === 'Teacher') {
+            $('#teacherFields').addClass('active').css({
+                visibility: 'visible',
+                height: 'auto',
+                padding: '10px',
+                margin: '10px 0'
+            });
+            $('#guardianFields').removeClass('active').css({
+                visibility: 'hidden',
+                height: '0',
+                padding: '0',
+                margin: '0'
+            });
+        } else if ($(this).val() === 'Guardian') {
+            $('#guardianFields').addClass('active').css({
+                visibility: 'visible',
+                height: 'auto',
+                padding: '10px',
+                margin: '10px 0'
+            });
+            $('#teacherFields').removeClass('active').css({
+                visibility: 'hidden',
+                height: '0',
+                padding: '0',
+                margin: '0'
+            });
+        }
+    });
+});
+
+    </script>
+</body>
+</html>
