@@ -18,13 +18,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $subject_taught = $_POST['subject_taught'];
 
         // Upload teacher card
-        move_uploaded_file($_FILES['teacher_card']['tmp_name'], "uploads/" . $teacher_card);
+        move_uploaded_file($_FILES['teacher_card']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . "/newattendancesystem/src/uploads/" . $teacher_card);
+        // echo "uploaded";
     } elseif ($role == "Guardian") {
         $enrolment_letter = $_FILES['enrolment_letter']['name'];
         $classes_studying = implode(", ", $_POST['classes']);
 
         // Upload enrolment letter
-        move_uploaded_file($_FILES['enrolment_letter']['tmp_name'], "uploads/" . $enrolment_letter);
+        move_uploaded_file($_FILES['enrolment_letter']['tmp_name'], $_SERVER['DOCUMENT_ROOT'] . "/newattendancesystem/src/uploads/"  . $enrolment_letter);
     }
 
     $sql = "INSERT INTO registration (name, email, password, date_of_birth, address, role, teacher_card, subject_taught, enrolment_letter, classes_studying) 
@@ -32,7 +33,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     if ($conn->query($sql) === TRUE) {
         echo "Registration successful!";
-        header("Location: /index.html");
+        header("Location: /newattendancesystem/src/index.html");
         exit();
     } else {
         echo "Error: " . $sql . "<br>" . $conn->error;
